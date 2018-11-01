@@ -1,29 +1,20 @@
 import * as React from 'react'
 import TodoItem from './TodoItem'
+import {ITodoListProps} from '../type/index'
 
-interface Props {
-    todoItems: []
-    onToggle: (todoId: number) => void
-    onRemove: (todoId: number) => void
-}
+const todoList : React.SFC<ITodoListProps> = ({todos, onToggle, onRemove}) => {
 
-
-
-class TodoList extends React.Component<Props>{
-
-    render(){
-        const {todoItems, onToggle, onRemove} = this.props
-
-        const todoList = todoItems.map((todo: TodoItem) => (
-            <TodoItem key={todo.id} text={todo.text} done={todo.done}
-                      onToggle={() => onToggle(todo.id)} onRemove={() => onRemove(todo.id)} />
-        ))
-
+    const todoList = todos.map((todo: any) => {
         return(
-            {todoList}
+            <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove}/>
         )
-    }
-
+    })
+    
+    return (
+        <div>
+            {todoList}
+        </div>
+    )
 }
 
-export default  TodoList
+export default todoList

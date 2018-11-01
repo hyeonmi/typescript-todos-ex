@@ -1,34 +1,20 @@
 import * as React from 'react'
+import {ITodoItemProps} from '../type/index'
 
-interface TodoItem {
-    id: number
-    text: string
-    done: boolean
-}
-
-interface Props extends TodoItem{
-    onToggle: (todoId: number) => void
-    onRemove: (todoId: number) => void
-}
-
-class TodoItem extends React.Component<Props> {
+class TodoItem extends React.Component<ITodoItemProps> {
     render(){
-        const {id, text, done, onToggle, onRemove} = this.props
+        const {todo, onToggle, onRemove} = this.props
+        const {id, text, done} = todo
+        const handleToggle = () => {onToggle(id)}
+        const handleRemove = () => {onRemove(id)}
+
         return(
-            <li>
-                <b onClick={onToggle}
-                   style={{textDecoration: done ? 'line-throught' : 'none'}}>
-                    {text}
-                </b>
-                <span style={{marginLeft:'2'}} onClick={onClickDelete}>Delete</span>
-            </li>
+            <div>
+                <input type="checkbox" checked={done} readOnly={true} onClick={handleToggle} />
+                <span style={{textDecoration: done ? 'line-through':''}}>{text}</span>
+                <span onClick={handleRemove}>  [delete]</span>
+            </div>
         )
     }
-
-    onToggle =  () : void =>{
-
-    }
 }
-
-
 export default TodoItem
