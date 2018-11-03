@@ -4,6 +4,10 @@ import {ITodoInputProps} from '../type'
 const todoInput : React.SFC<ITodoInputProps> = ({value, onChange, onInsert}) => {
 
     const handleKeyPress = (e: React.KeyboardEvent<Element>) => {
+        if(value === ""){
+            return
+        }
+        
         if(e.key === 'Enter'){
             onInsert()
         }
