@@ -1,19 +1,19 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import * as Redux from 'redux'
-import {addTodo} from '../actions'
+import * as actions from '../actions'
 
+type OwnProps = {
+}
 
-export interface OwnProps {
+type StateProps = {
+    input: {value: string}
 }
-  
-interface StateProps {
-    
+
+type DispatchProps = {
+    addTodo: (text: string) => {}
 }
-       
-interface DispatchProps {
-}
-   
+
 type Props = StateProps & DispatchProps & OwnProps
 
 interface State {
@@ -29,13 +29,13 @@ class TodoInput extends React.Component<Props, State> {
         }
     }
 
-    _handleKeyPress = (e: React.KeyboardEvent<Element>) => {
+    handleKeyPress = (e: React.KeyboardEvent<Element>) => {
         if(e.key === 'Enter'){
-            this._handleInsert()
+            this.handleInsert()
         }
     }
 
-    _handleInsert = () => {
+    handleInsert = () => {
         const {input} = this.state
         if(!input){
             return
@@ -44,26 +44,30 @@ class TodoInput extends React.Component<Props, State> {
         if(input.trim() === ""){
             return
         }
+
+        this.props.addTodo(input)
+        this.setState({input: ""})
+    }
+
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target
+        this.setState({input: value})
     }
 
     render(){
         return (
             <div>
-                <input value={this.state.input} onKeyPress={this._handleKeyPress} />
-                <input type='button' onClick={this._handleInsert} value='추가' />
+                <input value={this.state.input} onKeyPress={this.handleKeyPress} onChange={this.handleChange} />
+                <input type='button' onClick={this.handleInsert} value='추가' />
             </div>
         )
     }
 
 }
 
-const mapStateToProps = (state: State) => ({
-    input: state.input
-});
-  
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, ownProps: OwnProps) => ({
-    handleClick: dispatch(addTodo())
+    addTodo: (text: string) => dispatch(actions.addTodo(text))
 })
-    
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(TodoInput)
+
+export default connect<DispatchProps, OwnProps>(null, mapDispatchToProps)(TodoInput)
 

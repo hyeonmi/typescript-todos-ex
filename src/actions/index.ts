@@ -1,52 +1,31 @@
 import * as uuid from 'uuid/v1'
+import {ActionTypes} from './ActionTypes'
 
-<<<<<<< HEAD
-export const addTodo = (text: string) => ({
-    type: 'ADD_TODO',
-    id: uuid(),
-    text
-})
+type AddTodo = { type: typeof ActionTypes.ADD_TODO, text: string, id: string, done: boolean }
+type ToggleTodo = { type: typeof ActionTypes.TOGGLE_TODO, id: string}
+type RemoveTodo = { type: typeof ActionTypes.REMOVE_TODO, id: string}
 
-export const toggleTodo = (id: string) => ({
-    type: 'TOGGLE_TODO',
-    id
-})
-=======
-const ADD_TODO = 'ADD_TODO'
-const TOGGLE_TODO = 'TOGGLE_TODO'
-const REMOVE_TODO = 'REMOVE_TODO'
-
-type AddTodo = { type: typeof ADD_TODO, payload: {text: string, id: string}}
-type ToggleTodo = { type: typeof TOGGLE_TODO, payload: {id: string}}
-type RemoveTodo = { type: typeof REMOVE_TODO, payload: {id: string}}
-
-const addTodo = (text: string) : AddTodo => {
+export const addTodo = (text: string) : AddTodo => {
     return {
-        type: ADD_TODO,
-        payload: {
-            text,
-            id: uuid()
-        }
+        text,
+        type: ActionTypes.ADD_TODO,
+        id: uuid(),
+        done: false
     }
 }
 
-const toggleTodo = (id: string) : ToggleTodo => {
+export const toggleTodo = (id: string) : ToggleTodo => {
     return {
-        type: TOGGLE_TODO,
-        payload: {
-            id
-        }
+        id,
+        type: ActionTypes.TOGGLE_TODO,
     }
 }
 
-const removeTodo = (id: string) : RemoveTodo => {
+export const removeTodo = (id: string) : RemoveTodo => {
     return {
-        type: REMOVE_TODO,
-        payload: {
-            id
-        }
+        id,
+        type: ActionTypes.REMOVE_TODO,
     }
 }
 
-export type Actions = AddTodo | ToggleTodo | RemoveTodo
->>>>>>> fe389edaaa1f5db883d8da1a7867d9e10f36cb11
+export type TodoAction = AddTodo | ToggleTodo | RemoveTodo

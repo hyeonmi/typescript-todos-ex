@@ -1,7 +1,7 @@
 import * as React from 'react'
-import MainPage from './components/MainPage'
+import MainPage from './containers/MainPage'
 import TodoInput from './components/TodoInput'
-import TodoList from './components/TodoList'
+import TodoContainer from './containers/TodoContainer'
 
 interface Props {
 }
@@ -11,11 +11,10 @@ class App extends React.Component<Props> {
         return (
             <MainPage>
                 <TodoInput />
-                <TodoList />
+                <TodoContainer />
             </MainPage>
         )
     }
-
 }
 
 export default App;

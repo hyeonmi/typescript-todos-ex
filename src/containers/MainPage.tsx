@@ -1,5 +1,8 @@
 import * as React from 'react'
-import {IMainPageProps} from '../type'
+
+export interface IMainPageProps {
+    children?: React.ReactNode
+}
 
 class MainPage extends React.Component<IMainPageProps>{
     render(){

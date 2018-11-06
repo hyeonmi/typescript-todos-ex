@@ -1,34 +1,55 @@
-import { IStoreState, IAction, ITodo } from '../type'
-const todos = (state: IStoreState, action: IAction<ITodo>) => {
-    const {payload} = action
-    switch(action.type){
-        case "ADD_TODO":
+import {ActionTypes} from '../actions/ActionTypes'
+import {TodoAction} from '../actions'
 
+export interface Todo {
+    id: string,
+    text: string,
+    done: boolean
+}
+
+export interface ITodos {
+    todos: Todo[]
+}
+
+const initailState : ITodos = {
+    todos: []
+}
+
+const todos = (state: ITodos = initailState, action: TodoAction) : ITodos => {
+
+    switch(action.type){
+        case ActionTypes.ADD_TODO:{
+            const {id, text, done} = action
             return {
                 todos: [
                     ...state.todos,
                     {
-                        ...action.payload
+                        id,
+                        text,
+                        done
                     }
-                ]
+                ]            
             }
-        case "TOGGLE_TODO":
-
-            return state.todos.map((todo: ITodo) => 
-                todo.id === payload.id ? { ...todo, done: !todo.done} : todo
+        }
+        case ActionTypes.TOGGLE_TODO:{
+            const nextTodos = state.todos.map((todo: any) =>
+                todo.id === action.id ? { ...todo, done: !todo.done} : todo
             )
-        case "REMOVE_TODO":
-
-            const index = state.todos.findIndex((todo: any) => todo.id === payload.id)
-        return {
-            todos: [
-                ...state.todos.slice(0, index),
-                ...state.todos.slice(index+1)
-            ]
+            return {
+                todos: nextTodos
+            }
+        }
+        case ActionTypes.REMOVE_TODO:{
+            const index = state.todos.findIndex((todo: any) => todo.id === action.id) || state.todos.length
+            return {
+                todos: [
+                    ...state.todos.slice(0, index),
+                    ...state.todos.slice(index + 1)
+                ]
+        }
         }
         default:
         return state
     }
 }
-
 export default todos

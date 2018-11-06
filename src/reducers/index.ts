@@ -1,10 +1,9 @@
-import { combineReducers } from 'redux'
 import todos from './todos'
-import input from './input'
+
+import {combineReducers} from 'redux'
 
 const reducers = combineReducers({
-    todos,
-    input
+    todosData: todos
 })
 
 export default reducers

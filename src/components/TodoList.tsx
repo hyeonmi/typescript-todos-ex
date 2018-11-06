@@ -1,18 +1,17 @@
 import * as React from 'react'
 import TodoItem from './TodoItem'
-import {ITodoListProps} from '../type/index'
+import {Todo} from '../reducers/todos'
 
-const todoList : React.SFC<ITodoListProps> = ({todos, onToggle, onRemove}) => {
+interface TodoList {
+    todos : Todo[],
+    toggleTodo: (id: string) => {}
+    removeTodo: (id: string) => {}
+}
 
-    const todoList = todos.map((todo: any) => {
-        return(
-            <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove}/>
-        )
-    })
-    
-    return (
+const todoList : React.SFC<TodoList> = ({todos, toggleTodo, removeTodo}) => {
+    return(
         <div>
-            {todoList}
+            {todos.map((todo: any) => <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={removeTodo}/>)}
         </div>
     )
 }
