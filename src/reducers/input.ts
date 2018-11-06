@@ -1,12 +1,12 @@
-import {IStoreState, IAction} from '../type'
+import {IStoreState, IAction, IInput} from '../type'
 
-const input = (state: IStoreState, action: IAction) => {
-    switch(action.type){
-        case 'SET_INPUT':
-            return state.input = action.payload.input
-        default:
-            return state;
-    }
+type input = (state: IStoreState, action: IAction<IInput>) => {
+    // switch(action.type){
+    //     case 'SET_INPUT':
+    //         return state.input = action.payload.input
+    //     default:
+    //         return state;
+    // }
 }
 
 export default input
